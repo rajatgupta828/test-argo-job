@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-job
+  namespace: argocd
+spec:
+  project: default
+  
+  sources:
+    # Source 1: Helm chart from your public repo
+    - repoURL: https://github.com/rajatgupta828/argp-helm-charts.git
+      targetRevision: main
+      path: .
+      helm:
+        releaseName: test-job
+        valueFiles:
+          - $values/manifests/values-test.yaml
+    - repoURL: https://github.com/rajatgupta828/test-argo-job.git
+      targetRevision: main
+      ref: values
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: services
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  
+  info:
+    - name: Description
+      value: Test K8S Job for testing ArgoCD hook re-triggering with customLabels
+    - name: Owner
+      value: test-team
+    - name: Purpose
+      value: Testing job re-creation on PR approval via customLabels.runNumber change
+
