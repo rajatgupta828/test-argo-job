@@ -32,7 +32,7 @@ containers:
         memory: 128Mi
     environment:
       ENVIRONMENT: "local-test"
-      RUN_NUMBER: "1"
+      RUN_NUMBER: "2"
 
 linkerd:
   enabled: false
