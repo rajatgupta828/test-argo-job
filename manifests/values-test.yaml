@@ -1,0 +1,48 @@
+version: 0.0.1
+owner: test-team
+jobType: Job
+
+containers:
+  main:
+    image:
+      repository: busybox
+      tag: latest
+    command:
+      - sh
+      - -c
+      - |
+        echo "========================================="
+        echo "🚀 Job Started"
+        echo "========================================="
+        echo "Environment: ${ENVIRONMENT}"
+        echo "Run Number: ${RUN_NUMBER}"
+        echo "Triggered At: $(date)"
+        echo "========================================="
+        echo ""
+        echo "📊 Running evaluation tasks..."
+        echo "========================================="
+        echo "✅ Evaluation Complete!"
+        echo "========================================="
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+    environment:
+      ENVIRONMENT: "local-test"
+      RUN_NUMBER: "1"
+
+linkerd:
+  enabled: false
+
+job:
+  hook: Sync
+  hookDelete: BeforeHookCreation
+  completions: 1
+  ttlSecondsAfterFinished: 300
+  customLabels:
+    runNumber: "1"
+    triggerType: "manual"
+
