@@ -32,7 +32,7 @@ containers:
         memory: 128Mi
     environment:
       ENVIRONMENT: "local-test"
-      RUN_NUMBER: "6"
+      RUN_NUMBER: "7"
 
 linkerd:
   enabled: false
@@ -43,6 +43,6 @@ job:
   completions: 1
   ttlSecondsAfterFinished: 300
   customLabels:
-    runNumber: "6"
+    runNumber: "7"
     triggerType: "manual"
 
